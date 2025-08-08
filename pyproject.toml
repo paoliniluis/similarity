@@ -1,0 +1,31 @@
+[project]
+name = "github-duplicador-finder"
+version = "1.0.0"
+description = "A service to find and flag duplicate issues in a GitHub repository in real-time."
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn>=0.29.0",
+    "sqlalchemy>=2.0.30",
+    "psycopg[binary]>=3.1.19",
+    "pgvector>=0.4.1",
+    "python-decouple>=3.8",
+    "requests>=2.31.0",
+    "sentence-transformers>=2.7.0",
+    "litellm>=1.39.5",
+    "tqdm>=4.66.4",
+    "slowapi>=0.1.9",
+    "torch>=2.0.0",
+    "httpx>=0.27.0",
+    "aiohttp>=3.9.0",
+    "json-repair>=0.48.0",
+    "typer>=0.12.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

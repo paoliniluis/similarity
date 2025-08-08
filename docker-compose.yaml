@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: github-similarity-search
+      POSTGRES_PASSWORD: github-similarity-search
+      POSTGRES_DB: github-similarity-search
+    volumes:
+      - ${PWD}/similarity-search-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U github-similarity-search"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2048M
+        reservations:
+          cpus: '2'
+          memory: 2048M
+  litellm:
+    image: litellm/litellm:v1.74.0-stable
+    ports:
+      - 4000:4000
+    volumes:
+      - ${PWD}/config/litellm/config.yaml:/app/config.yaml
+    command: ["--config", "/app/config.yaml"]
+  # api:
+  #   image: python:3.12-slim
+  #   ports:
+  #     - 8000:8000
+  #   volumes:
+  #     - ${PWD}/app:/app
+  #     - ${PWD}/api.py:/app/api.py
+  #   working_dir: /app
+  #   command: ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+  #   depends_on:
+  #     - postgres
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2'
+  #         memory: 2048M
+  #       reservations:
+  #         cpus: '2'
+  #         memory: 2048M
+  # worker:
+  #   image: python:3.12-slim
+  #   volumes:
+  #     - ${PWD}/worker.py:/app/worker.py
+  #   working_dir: /app
+  #   command: ["python", "worker.py"]
+  #   depends_on:
+  #     - api
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: 1024M
+  #       reservations:
+  #         cpus: '1'
+  #         memory: 1024M

@@ -1,0 +1,32 @@
+{
+  "name": "readability-example",
+  "version": "1.0.0",
+  "description": "Example using Mozilla Readability to convert web pages to markdown",
+  "main": "readability_example.js",
+  "scripts": {
+    "start": "node readability_example.js",
+    "crawl": "node run_crawler.js docs",
+    "glossary-crawl": "node run_crawler.js glossary",
+    "crawl-docs": "node run_crawler.js docs",
+    "crawl-glossary": "node run_crawler.js glossary"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "dotenv": "^16.4.5",
+    "jsdom": "^26.1.0",
+    "pg": "^8.16.3",
+    "tiktoken": "^1.0.21",
+    "turndown": "^7.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "readability",
+    "markdown",
+    "html",
+    "content-extraction"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
